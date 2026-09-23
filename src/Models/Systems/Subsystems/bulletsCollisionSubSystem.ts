@@ -24,7 +24,6 @@ function checkForPlayerCollision(bullet: Bullet, playerCollision: DefaultShip): 
     
     //TODO:: Visual feedbacks
     playerCollision.currentHp--;
-    console.log("PLAYER HEALTH:: " + playerCollision.currentHp);
     return true;
 }
 
@@ -40,7 +39,6 @@ function checkForEnemyCollision(bullet: Bullet, gameState: GameState): boolean{
         anyHit = true;
         //TODO: VISUAL FEEDBACKS
         enemy.currentHp--;
-        console.log(enemy.currentHp)
         break;
     }
     

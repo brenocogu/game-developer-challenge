@@ -36,13 +36,12 @@ export function PlayerPawnView({ world }: Props) {
 
     return (
         <pixiSprite
+            zIndex={4}
             ref={spriteRef}
             anchor={0.5}
             eventMode={'static'}
             width={world.state.player.width}
             height={world.state.player.height}
-            texture={texture}
-            x={world.state.player.position.x}
-            y={world.state.player.position.y}/>
+            texture={texture}/>
     );
 }

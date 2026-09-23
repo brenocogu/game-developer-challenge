@@ -9,9 +9,8 @@ export function checkForChargerCollision(state: GameState, enemy: Enemy): boolea
     if(!overlaps)
         return false;
 
-    enemy.currentHp = 0;
+    enemy.currentHp = -100;
     //TODO:: Visual feedbacks
     playerCollision.currentHp--;
-    console.log("PLAYER HEALTH:: " + playerCollision.currentHp);
     return true;
 }

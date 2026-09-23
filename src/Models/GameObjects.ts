@@ -53,6 +53,7 @@ export enum EnemyType{
 }
 
 export interface Enemy extends DefaultShip {
+    enemyUID: number,
     state: EnemyState,
     enemyType: EnemyType,
     range: number,
@@ -60,6 +61,7 @@ export interface Enemy extends DefaultShip {
 
 export interface EnemySpawner {
     timeToSpawn: number,
+    nextUID: number,
 }
 
 export interface InputState{
@@ -69,11 +71,12 @@ export interface InputState{
 }
 
 export interface GameState {
-    arena: Arena;
-    player: Player;
-    bullets: Bullet[];
-    enemies: Enemy[];
-    enemySpawner: EnemySpawner
-    score: number;
-    paused: boolean;
+    arena: Arena,
+    player: Player,
+    bullets: Bullet[],
+    enemies: Enemy[],
+    enemySpawner: EnemySpawner,
+    score: number,
+    paused: boolean,
+    timeRemaining: number
 }

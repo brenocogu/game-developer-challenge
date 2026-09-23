@@ -5,23 +5,41 @@ import {applyInput} from "../Systems/inputHandlerSystem.ts";
 import {playerInputShootNewBullet, updateBullets, updateReloadTime} from "../Systems/bulletSystem.ts";
 import {updateDefeatedEnemies, updateEnemiesAttacking, updateEnemiesPursuing} from "../Systems/enemyBehaviourSystem.ts";
 import {spawnEnemyRandomOutside} from "../Systems/enemySpawnSystem.ts";
+import {GameEndReason} from "../GameRules.ts";
 
+export const TIME_MAX: number = 3;
+export type OnGameFinished = (e: GameEndReason) => void;
 export class WorldModel {
-    state: GameState = this.createInitialState();
+    state: GameState;
     input: InputState = { turnDirection: 0, thrust: false, firing: false };
     
     screenWidth: number;
     screenHeight: number;
-    
-    constructor(screenWidth: number, screenHeight: number){
+    onGameFinishedHandler: OnGameFinished;
+    onPauseHandler: (paused: boolean) => void;
+    constructor(
+        screenWidth: number, 
+        screenHeight: number,
+        onPauseHandler: (paused: boolean) => void,
+        onGameFinishedHandler: OnGameFinished,){
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
+        this.onPauseHandler = onPauseHandler;
+        this.state = this.createInitialState();
+        this.onGameFinishedHandler = onGameFinishedHandler;
     }
     
     
     update(deltaTime: number) {
         if(this.state.paused)
             return;
+
+        this.state.timeRemaining -= deltaTime;
+        if(this.state.timeRemaining <= 0){
+            //TODO pause and end-screen + results
+            this.state.paused = true;
+            this.onGameFinishedHandler(GameEndReason.GAME_WON);
+        }
         
         applyInput(this.state, this.input, deltaTime);
         playerInputShootNewBullet(this.state, this.input, this.state.player);
@@ -63,11 +81,25 @@ export class WorldModel {
             bullets: [],
             enemies: [],
             enemySpawner: {
-                timeToSpawn: 5
+                timeToSpawn: 5,
+                nextUID: 0,
             },
-            score: 0
+            score: 0,
+            timeRemaining: TIME_MAX
         }
     }
     
-    
+    performPause(){
+        if (this.state.paused)
+            return;
+        
+        this.state.paused = true;
+        this.onPauseHandler(this.state.paused);
+    }
+
+    revertPause(){
+        console.log("revert paused");
+        this.state.paused = false;
+        this.onPauseHandler(this.state.paused);
+    }
 }

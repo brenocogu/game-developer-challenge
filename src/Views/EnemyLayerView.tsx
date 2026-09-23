@@ -1,16 +1,20 @@
 import {useRef, useState} from 'react';
 import {useTick} from '@pixi/react';
-import {Assets, Sprite, Texture, Container} from "pixi.js";
+import {Assets, Sprite, Texture} from "pixi.js";
 import type {WorldModel} from "../Models/World/WorldModel.ts";
 import type {Enemy} from "../Models/GameObjects.ts";
+import { EnemyHealthBarView } from "./GameHUD/EnemyHealthBarView.tsx";
 
 interface Props {
     world: WorldModel;
 }
 
 export function EnemyLayerView({ world }: Props) {
-    const containerRef = useRef(null);
-
+    const enemyContainerRef = useRef(null);
+    const [enemyIds, setEnemyIds] = useState<number[]>(() =>
+        world.state.enemies.map(e => e.enemyUID)
+    );
+    
     const [texture, setTexture] = useState(Texture.EMPTY)
     if (texture === Texture.EMPTY) {
         Assets
@@ -21,7 +25,7 @@ export function EnemyLayerView({ world }: Props) {
     }
 
     useTick(() => {
-        const container = containerRef.current;
+        const container = enemyContainerRef.current;
         if (!container) return;
 
         const enemies = world.state.enemies;
@@ -48,7 +52,28 @@ export function EnemyLayerView({ world }: Props) {
             sprite.y = enemy.position.y;
             sprite.rotation = enemy.rotation;
         }
+
+        const ids = enemies.map(e => e.enemyUID);
+        if (ids.length !== enemyIds.length || ids.some((id, i) => id !== enemyIds[i])) {
+            setEnemyIds(ids);
+        }
+
     });
 
-    return <pixiContainer ref={containerRef} />;
+    return <>
+        <pixiContainer ref={enemyContainerRef} zIndex={3} />
+        <pixiContainer>
+            {enemyIds.map(id => {
+                const enemy = world.state.enemies.find(e => e.enemyUID === id);
+                if (!enemy) return null;
+                return (
+                    <EnemyHealthBarView
+                        key={`hp-${id}`}
+                        attachedShip={enemy}
+                        targetSize={{ x: 70, y: 10 }}
+                    />
+                );
+            })}
+        </pixiContainer>
+    </>;
 }

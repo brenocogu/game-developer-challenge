@@ -12,10 +12,10 @@ export function updateDefeatedEnemies(state: GameState){
     for (const enemy of state.enemies) {
         if (enemy.currentHp > 0)
             continue;
-        
+        defeated.push(enemy);
+        if (enemy.currentHp <= -100) continue; //Skips explosion enemy, needs better treatment
         //TODO:: Score deve viver em outra layer
         state.score++;
-        defeated.push(enemy);
     }
     state.enemies = state.enemies.filter((enemy) => !defeated.includes(enemy));
 }

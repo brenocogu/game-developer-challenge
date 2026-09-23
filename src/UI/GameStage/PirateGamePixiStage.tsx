@@ -4,6 +4,7 @@ import { PlayerPawnView } from "../../Views/PlayerPawnView.tsx";
 import {BulletLayerView} from "../../Views/BulletLayerView.tsx";
 import {useState} from "react";
 import {EnemyLayerView} from "../../Views/EnemyLayerView.tsx";
+import {PlayerHUDView} from "../../Views/GameHUD/PlayerHUDView.tsx";
 
 extend({TilingSprite});
 function PirateGamePixiStage({ world }) {
@@ -22,6 +23,7 @@ function PirateGamePixiStage({ world }) {
     return (
         <>
             <pixiTilingSprite texture={texture} width={800} height={600} />
+            <PlayerHUDView world={world} />
             <PlayerPawnView world={world} />
             <BulletLayerView world={world} />
             <EnemyLayerView world={world} />

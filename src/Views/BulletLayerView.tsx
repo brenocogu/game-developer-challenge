@@ -1,5 +1,5 @@
 // pixi/BulletLayer.tsx
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {useTick} from '@pixi/react';
 import {Assets, Sprite, Texture} from "pixi.js";
 import type {WorldModel} from "../Models/World/WorldModel.ts";
@@ -47,5 +47,7 @@ export function BulletLayerView({ world }: Props) {
         }
     });
 
-    return <pixiContainer ref={containerRef} />;
+    return <pixiContainer 
+        ref={containerRef} 
+        zIndex={3}/>;
 }

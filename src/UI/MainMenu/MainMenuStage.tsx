@@ -1,8 +1,10 @@
 import heroImg from '../../assets/png/retina/ui/menu/title_pirate_battle.png'
 import boatImage from '../../assets/png/default/ships/ship_8.png'
 import GenericButton from "../GenericUI/GenericButton.tsx";
-
-function MainMenuStage({ sceneChangeHandler }) {
+interface Props{
+    sceneChangeHandler: Function
+}
+function MainMenuStage({ sceneChangeHandler }: Props) {
 
     return (
         <>
@@ -12,16 +14,16 @@ function MainMenuStage({ sceneChangeHandler }) {
                     <p>SET SAIL. TAKE COMMAND</p>
                 </div>
                 <div>
-                    <GenericButton clickCallback={() => sceneChangeHandler("game")} />
+                    <GenericButton clickCallback={() => sceneChangeHandler("game")} buttonText={"Play"} />
                     <br />
-                    <GenericButton clickCallback={() => sceneChangeHandler("options")}  />
+                    <GenericButton clickCallback={() => sceneChangeHandler("options")} buttonText={"Options"} />
                     <br />
                     <img src={boatImage} />
                     <br />
                     <p>Navigate the islands. Survive the battle</p>
                     <br />
-                    <GenericButton clickCallback={() => sceneChangeHandler("ranking")} />
-                    <GenericButton clickCallback={() => sceneChangeHandler("history")} />
+                    <GenericButton clickCallback={() => sceneChangeHandler("ranking")} buttonText={"Ranking"} />
+                    <GenericButton clickCallback={() => sceneChangeHandler("history")} buttonText={"History"} />
                 </div>
             </section>
 

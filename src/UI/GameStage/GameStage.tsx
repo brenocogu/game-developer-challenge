@@ -5,17 +5,22 @@ import {
     Sprite,
 } from 'pixi.js';
 import {WorldModel} from "../../Models/World/WorldModel.ts";
-import {useEffect, useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 import PirateGamePixiStage from "./PirateGamePixiStage.tsx";
+import PausePopUp from "../PausePopUp/PausePopUp.tsx";
 
 extend({
     Container,
     Graphics,
     Sprite,
 });
-
-function GameStage({ sceneChangeHandler }) {
-    let worldModel = useMemo(() => new WorldModel(800,600), []);
+interface Props{
+    sceneChangeHandler: Function
+}
+function GameStage({ sceneChangeHandler } : Props) {
+    const [paused, setPaused] = useState(false);
+    //TODO:: Change to UseRef
+    const worldModel = useMemo(() => new WorldModel(800,600, setPaused), []);
     
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
@@ -45,7 +50,10 @@ function GameStage({ sceneChangeHandler }) {
         window.addEventListener('keydown', down);
         window.addEventListener('keyup', up);
 
-        const blur = () => resetInput(worldModel);
+        const blur = () => {
+            resetInput(worldModel);
+            worldModel.performPause();
+        };
         window.addEventListener('blur', blur);
 
         return () => {
@@ -56,9 +64,12 @@ function GameStage({ sceneChangeHandler }) {
     }, [worldModel]);
     
     return (
-        <Application>
-            <PirateGamePixiStage world={worldModel} />
-        </Application>
+        <>
+            {(paused) && (<PausePopUp sceneChangeHandler={sceneChangeHandler} unpauseHandler={() => worldModel.revertPause()}/>)}
+            <Application>
+                <PirateGamePixiStage world={worldModel} />
+            </Application>
+        </>
     )
 }
 
@@ -67,5 +78,6 @@ function resetInput(world: WorldModel) {
     world.input.turnDirection = 0;
     world.input.thrust = false;
 }
+
 
 export default GameStage

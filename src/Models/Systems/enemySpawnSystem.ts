@@ -19,6 +19,7 @@ export function spawnEnemyRandomOutside(state: GameState, deltaTime: number){
     
     let spawnPos: Vector2 = { x: useMaxX ? viewportMaxX : -10, y: useMaxY ? viewportMaxY : -10 };
     let spawned: Enemy = {
+        enemyUID: state.enemySpawner.nextUID,
         state: EnemyState.PURSUIT,
         enemyType: spawnAttacker ? EnemyType.RANGER : EnemyType.CHARGER,
         range: spawnAttacker ? 150 : 20,
@@ -36,6 +37,7 @@ export function spawnEnemyRandomOutside(state: GameState, deltaTime: number){
     }
     
     state.enemySpawner.timeToSpawn = 0;
+    state.enemySpawner.nextUID++;
     state.enemies.push(spawned);
 }
 

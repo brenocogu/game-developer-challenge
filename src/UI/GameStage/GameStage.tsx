@@ -27,6 +27,8 @@ function GameStage({ sceneChangeHandler }) {
                 worldModel.input.thrust = true;
             if(e.code == "Space")
                 worldModel.input.firing = true;
+            
+            e.preventDefault();
         };
         
         const up = (e: KeyboardEvent) => {

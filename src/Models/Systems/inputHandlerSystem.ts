@@ -1,17 +1,17 @@
 import type {GameState, InputState} from "../GameObjects.ts";
 import type {Vector2} from "../Vector2.ts";
 
+const NINETY_DEGREES = Math.PI / 2;
 export function applyInput(state: GameState, input: InputState, deltaTime: number) {
     const thrust = 50
-    const angleCorrection = Math.PI/2;
     
     state.player.rotation += input.turnDirection * Math.PI * deltaTime;
     if (!input.thrust)
         return;
 
     let playerPosition: Vector2 = state.player.position;
-    let predictableX = Math.cos(state.player.rotation + angleCorrection) * thrust * deltaTime;
-    let predictableY = Math.sin(state.player.rotation + angleCorrection) * thrust * deltaTime;
+    let predictableX = Math.cos(state.player.rotation + NINETY_DEGREES) * thrust * deltaTime;
+    let predictableY = Math.sin(state.player.rotation + NINETY_DEGREES) * thrust * deltaTime;
 
     if(!validateMovement({...playerPosition}, {x: predictableX, y: predictableY}))
         return;

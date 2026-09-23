@@ -8,8 +8,13 @@ import {
 } from 'react';
 
 import {useTick} from "@pixi/react";
+import type {WorldModel} from "../Models/World/WorldModel.ts";
 
-export function PlayerPawnView({ world }) {
+interface Props {
+    world: WorldModel;
+}
+
+export function PlayerPawnView({ world }: Props) {
     const spriteRef = useRef(null)
 
     const [texture, setTexture] = useState(Texture.EMPTY)
@@ -22,6 +27,7 @@ export function PlayerPawnView({ world }) {
     }
     
     const tick = () => {
+        if (!spriteRef.current) return;
         spriteRef.current.rotation = world.state.player.rotation
         spriteRef.current.x = world.state.player.position.x;
         spriteRef.current.y = world.state.player.position.y;
@@ -33,8 +39,8 @@ export function PlayerPawnView({ world }) {
             ref={spriteRef}
             anchor={0.5}
             eventMode={'static'}
-            width={33}
-            height={57}
+            width={world.state.player.width}
+            height={world.state.player.height}
             texture={texture}
             x={world.state.player.position.x}
             y={world.state.player.position.y}/>

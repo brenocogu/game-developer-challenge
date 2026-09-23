@@ -1,10 +1,10 @@
 import type {GameState, InputState} from "../GameObjects.ts";
 import type {Vector2} from "../Vector2.ts";
 
-import {applyInput} from "./inputHandlerSystem.ts";
-import {shootNewBullet, updateBullets, updateReloadTime} from "./bulletSystem.ts";
-import {updateEnemiesAttacking, updateEnemiesPursuing} from "./enemyBehaviourSystem.ts";
-import {spawnEnemyRandomOutside} from "./enemySpawnSystem.ts";
+import {applyInput} from "../Systems/inputHandlerSystem.ts";
+import {playerInputShootNewBullet, updateBullets, updateReloadTime} from "../Systems/bulletSystem.ts";
+import {updateDefeatedEnemies, updateEnemiesAttacking, updateEnemiesPursuing} from "../Systems/enemyBehaviourSystem.ts";
+import {spawnEnemyRandomOutside} from "../Systems/enemySpawnSystem.ts";
 
 export class WorldModel {
     state: GameState = this.createInitialState();
@@ -24,11 +24,12 @@ export class WorldModel {
             return;
         
         applyInput(this.state, this.input, deltaTime);
-        shootNewBullet(this.state, this.input, this.state.player);
+        playerInputShootNewBullet(this.state, this.input, this.state.player);
 
-        spawnEnemyRandomOutside(this.state, deltaTime)
+        updateDefeatedEnemies(this.state);
+        spawnEnemyRandomOutside(this.state, deltaTime);
         updateEnemiesPursuing(this.state, deltaTime);
-        updateEnemiesAttacking(this.state);
+        updateEnemiesAttacking(this.state, deltaTime);
         
         updateBullets(this.state, deltaTime);
         updateReloadTime(this.state, deltaTime);
@@ -55,14 +56,18 @@ export class WorldModel {
                 turnSpeed: 15,
                 position: arenaMiddle,
                 rotation: 0,
-                collisionRadius: 15
+                collisionRadius: 10,
+                width: 33,
+                height: 57
             },
             bullets: [],
             enemies: [],
             enemySpawner: {
-                timeToSpawn: 2
+                timeToSpawn: 5
             },
             score: 0
         }
     }
+    
+    
 }

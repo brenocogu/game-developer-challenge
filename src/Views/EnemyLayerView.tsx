@@ -1,10 +1,11 @@
-// pixi/BulletLayer.tsx
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {useTick} from '@pixi/react';
-import {Assets, Sprite, Texture} from "pixi.js";
+import {Assets, Sprite, Texture, Container} from "pixi.js";
+import type {WorldModel} from "../Models/World/WorldModel.ts";
+import type {Enemy} from "../Models/GameObjects.ts";
 
 interface Props {
-    world: World;
+    world: WorldModel;
 }
 
 export function EnemyLayerView({ world }: Props) {
@@ -28,6 +29,7 @@ export function EnemyLayerView({ world }: Props) {
         while (container.children.length < enemies.length) {
             const sprite = new Sprite(texture);
             sprite.anchor.set(0.5);
+            sprite.setSize(33,57);
             container.addChild(sprite);
         }
 
@@ -38,8 +40,10 @@ export function EnemyLayerView({ world }: Props) {
         }
 
         for (let i = 0; i < enemies.length; i++) {
-            const sprite = container.children[i];
-            const enemy = enemies[i];
+            const sprite: Sprite = container.children[i];
+            const enemy: Enemy = enemies[i];
+            sprite.width = enemy.width;
+            sprite.height = enemy.height;
             sprite.x = enemy.position.x;
             sprite.y = enemy.position.y;
             sprite.rotation = enemy.rotation;

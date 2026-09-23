@@ -1,7 +1,7 @@
 import {type Enemy, EnemyState, EnemyType, type GameState} from "../GameObjects.ts";
 import type {Vector2} from "../Vector2.ts";
 
-export const MAX_SPAWN_TIME: number = 4;
+export const MAX_SPAWN_TIME: number = 10;
 
 export function spawnEnemyRandomOutside(state: GameState, deltaTime: number){
     
@@ -11,7 +11,6 @@ export function spawnEnemyRandomOutside(state: GameState, deltaTime: number){
         return;
     }
     
-    console.log("Spawning enemy");
     let viewportMaxX: number = state.arena.arenaSize.x + 10;
     let viewportMaxY: number = state.arena.arenaSize.y + 10;
     let useMaxX: boolean = coinFlip();
@@ -21,20 +20,22 @@ export function spawnEnemyRandomOutside(state: GameState, deltaTime: number){
     let spawnPos: Vector2 = { x: useMaxX ? viewportMaxX : -10, y: useMaxY ? viewportMaxY : -10 };
     let spawned: Enemy = {
         state: EnemyState.PURSUIT,
-        enemyType: spawnAttacker ? EnemyType.RANGER : EnemyType.CHASER,
-        range: spawnAttacker ? 40 : 1,
-        maxHp: 5,
-        currentHp: 5,
+        enemyType: spawnAttacker ? EnemyType.RANGER : EnemyType.CHARGER,
+        range: spawnAttacker ? 150 : 20,
+        maxHp: 2,
+        currentHp: 2,
         fireCooldown: 0,
-        speed: 30,
+        speed: spawnAttacker ? 30 : 66.6,
         direction: {x: 0, y:0},
-        turnSpeed: 15,
+        turnSpeed: spawnAttacker ? 15 : 45,
         position: {x: spawnPos.x, y: spawnPos.y},
         rotation: 0,
-        collisionRadius: 25
+        collisionRadius: 25,
+        width: 33,
+        height: 57
     }
     
-    state.enemySpawner.timeToSpawn = -9000;
+    state.enemySpawner.timeToSpawn = 0;
     state.enemies.push(spawned);
 }
 

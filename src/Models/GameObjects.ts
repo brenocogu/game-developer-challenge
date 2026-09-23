@@ -11,14 +11,23 @@ export interface GameObject{
 }
 
 export interface CollisionObject extends GameObject{
-    collisionRadius: number
+    collisionRadius: number,
+    width: number,
+    height: number,
+}
+
+export enum BulletOwnership{
+    PlayerOwned,
+    EnemyOwned
 }
 
 export interface Bullet extends CollisionObject{
     speed: number,
-    owner: GameObject
+    owner: BulletOwnership
 }
 
+//TODO:: health must be a component used by the Ships
+// we MUST change it to reflect through events
 export interface DefaultShip extends CollisionObject{
     currentHp: number;
     maxHp: number;
@@ -39,7 +48,7 @@ export enum EnemyState{
 }
 
 export enum EnemyType{
-    CHASER,
+    CHARGER,
     RANGER
 }
 

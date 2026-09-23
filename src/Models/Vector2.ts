@@ -16,3 +16,10 @@ export function Normalize(vector: Vector2): Vector2{
         y: vector.y / length
     };
 }
+
+export function Distance(origin: Vector2, target: Vector2){
+    const dx = origin.x - target.x;
+    const dy = origin.y - target.y;
+    
+    return Math.sqrt(dx * dx + dy * dy);
+}

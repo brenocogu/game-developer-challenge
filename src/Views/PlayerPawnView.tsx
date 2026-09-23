@@ -1,6 +1,6 @@
 import {
-    Assets,
-    Texture, Ticker,
+    Assets, type Sprite,
+    Texture,
 } from 'pixi.js';
 import {
     useRef,
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function PlayerPawnView({ world }: Props) {
-    const spriteRef = useRef(null)
+    const spriteRef = useRef<Sprite>(null)
 
     const [texture, setTexture] = useState(Texture.EMPTY)
     if (texture === Texture.EMPTY) {

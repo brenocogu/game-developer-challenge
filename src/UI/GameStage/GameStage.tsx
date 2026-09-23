@@ -21,7 +21,7 @@ interface Props{
 }
 function GameStage({ sceneChangeHandler } : Props) {
     const [paused, setPaused] = useState(false);
-    const [gameResults, setResults] = useState(null);
+    const [gameResults, setResults] = useState<GameResultsData | null>(null);
     
     //TODO:: Change to UseRef
     const worldModel = useMemo(() => new WorldModel(800,600, setPaused, handleGameFinished), []);

@@ -1,7 +1,7 @@
 // pixi/BulletLayer.tsx
 import {useRef, useState} from 'react';
 import {useTick} from '@pixi/react';
-import {Assets, Sprite, Texture} from "pixi.js";
+import {Assets, type Container, Sprite, Texture} from "pixi.js";
 import type {WorldModel} from "../Models/World/WorldModel.ts";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function BulletLayerView({ world }: Props) {
-    const containerRef = useRef(null);
+    const containerRef = useRef<Container<any>>(null);
 
     const [texture, setTexture] = useState(Texture.EMPTY)
     if (texture === Texture.EMPTY) {

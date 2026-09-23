@@ -20,6 +20,7 @@ export function HealthBarView({ attachedShip, targetSize }: Props) {
 
     useTick(() => {
         if (!spriteRef.current) return;
+        console.log(attachedShip.currentHp);
         //TODO:: add hit reaction and fill
     });
 

@@ -1,6 +1,6 @@
 import {useRef, useState} from 'react';
 import {useTick} from '@pixi/react';
-import {Assets, Sprite, Texture} from "pixi.js";
+import {Assets, type Container, Sprite, Texture} from "pixi.js";
 import type {WorldModel} from "../Models/World/WorldModel.ts";
 import type {Enemy} from "../Models/GameObjects.ts";
 import { EnemyHealthBarView } from "./GameHUD/EnemyHealthBarView.tsx";
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function EnemyLayerView({ world }: Props) {
-    const enemyContainerRef = useRef(null);
+    const enemyContainerRef = useRef<Container<any>>(null);
     const [enemyIds, setEnemyIds] = useState<number[]>(() =>
         world.state.enemies.map(e => e.enemyUID)
     );

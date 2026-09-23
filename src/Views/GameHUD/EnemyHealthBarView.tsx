@@ -1,5 +1,4 @@
-import {Assets, Sprite, Texture} from 'pixi.js';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useTick } from '@pixi/react';
 import type { DefaultShip } from '../../Models/GameObjects.ts';
 import type { Vector2 } from '../../Models/Vector2.ts';

@@ -1,11 +1,14 @@
-import type {GameState, InputState, Vector2} from "../GameObjects.ts";
-import {MakeVector2} from "../GameObjects.ts";
+import type {GameState, InputState} from "../GameObjects.ts";
+import type {Vector2} from "../Vector2.ts";
+
 import {applyInput} from "./inputHandlerSystem.ts";
-// import {updateBullets} from "./bulletSystem.ts";
+import {shootNewBullet, updateBullets, updateReloadTime} from "./bulletSystem.ts";
+import {updateEnemiesAttacking, updateEnemiesPursuing} from "./enemyBehaviourSystem.ts";
+import {spawnEnemyRandomOutside} from "./enemySpawnSystem.ts";
 
 export class WorldModel {
     state: GameState = this.createInitialState();
-    input: InputState = { turnDirection: 0, thrust: false };
+    input: InputState = { turnDirection: 0, thrust: false, firing: false };
     
     screenWidth: number;
     screenHeight: number;
@@ -17,8 +20,18 @@ export class WorldModel {
     
     
     update(deltaTime: number) {
+        if(this.state.paused)
+            return;
+        
         applyInput(this.state, this.input, deltaTime);
-        // updateBullets(this.state, deltaTime);
+        shootNewBullet(this.state, this.input, this.state.player);
+
+        spawnEnemyRandomOutside(this.state, deltaTime)
+        updateEnemiesPursuing(this.state, deltaTime);
+        updateEnemiesAttacking(this.state);
+        
+        updateBullets(this.state, deltaTime);
+        updateReloadTime(this.state, deltaTime);
     }
 
     createInitialState(): GameState {
@@ -38,12 +51,18 @@ export class WorldModel {
                 currentHp: 10,
                 fireCooldown: 2,
                 speed: 5,
-                direction: MakeVector2(0,0),
+                direction: {x: 0, y: 0},
                 turnSpeed: 15,
                 position: arenaMiddle,
-                rotation: 0
+                rotation: 0,
+                collisionRadius: 15
             },
-            
+            bullets: [],
+            enemies: [],
+            enemySpawner: {
+                timeToSpawn: 2
+            },
+            score: 0
         }
     }
 }

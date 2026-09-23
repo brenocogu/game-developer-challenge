@@ -3,11 +3,10 @@ import {
     Texture, Ticker,
 } from 'pixi.js';
 import {
-    useEffect,
     useRef,
     useState,
 } from 'react';
-import type {WorldModel} from "../Models/World/WorldModel.ts";
+
 import {useTick} from "@pixi/react";
 
 export function PlayerPawnView({ world }) {
@@ -21,8 +20,11 @@ export function PlayerPawnView({ world }) {
                 setTexture(result)
             });
     }
-    const tick = (ticker: Ticker) => {
+    
+    const tick = () => {
         spriteRef.current.rotation = world.state.player.rotation
+        spriteRef.current.x = world.state.player.position.x;
+        spriteRef.current.y = world.state.player.position.y;
     };
     useTick(tick);
 

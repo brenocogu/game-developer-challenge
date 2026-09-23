@@ -17,3 +17,5 @@ Já no fluxo de telas e interface, temos a pasta `UI/` contendo as telas de inte
 
 
 A renderização e carregamento dos assets vive dentro de `src/Views`, contém todas os componentes de PixiJS usados para o render do jogo.
+
+Uma importante decisão de manter os sistemas desacoplados é que as responsabilidades dos mesmos estão ordenadas e centralizadas. Um Exemplo é todo o ciclo de vida da `Bullet`, onde a colisão ou out-of-bounds não mexe diretamente com o conteúdo da array, mas sim via `filter` sempre antes de qualquer outro cálculo, evitando alterações na coleção enquanto acontece uma operação

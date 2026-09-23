@@ -7,12 +7,13 @@ import {updateDefeatedEnemies, updateEnemiesAttacking, updateEnemiesPursuing} fr
 import {spawnEnemyRandomOutside} from "../Systems/enemySpawnSystem.ts";
 import {GameEndReason} from "../GameRules.ts";
 
-export const TIME_MAX: number = 3;
+export const TIME_MAX: number = 180;
 export type OnGameFinished = (e: GameEndReason) => void;
 export class WorldModel {
     state: GameState;
     input: InputState = { turnDirection: 0, thrust: false, firing: false };
     
+    stateReload: boolean;
     screenWidth: number;
     screenHeight: number;
     onGameFinishedHandler: OnGameFinished;
@@ -27,18 +28,26 @@ export class WorldModel {
         this.onPauseHandler = onPauseHandler;
         this.state = this.createInitialState();
         this.onGameFinishedHandler = onGameFinishedHandler;
+        this.stateReload = false;
+        
     }
     
     
     update(deltaTime: number) {
+        if(this.stateReload)
+            return;
         if(this.state.paused)
             return;
 
         this.state.timeRemaining -= deltaTime;
         if(this.state.timeRemaining <= 0){
-            //TODO pause and end-screen + results
             this.state.paused = true;
             this.onGameFinishedHandler(GameEndReason.GAME_WON);
+        }
+        
+        if (this.state.player.currentHp <= 0){
+            this.state.paused = true;
+            this.onGameFinishedHandler(GameEndReason.GAME_OVER);
         }
         
         applyInput(this.state, this.input, deltaTime);
@@ -98,8 +107,13 @@ export class WorldModel {
     }
 
     revertPause(){
-        console.log("revert paused");
         this.state.paused = false;
         this.onPauseHandler(this.state.paused);
+    }
+    
+    performReload(){
+        this.stateReload = true;
+        this.state = this.createInitialState();
+        this.stateReload = false;
     }
 }

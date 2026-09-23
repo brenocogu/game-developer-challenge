@@ -5,9 +5,14 @@ import {BulletLayerView} from "../../Views/BulletLayerView.tsx";
 import {useState} from "react";
 import {EnemyLayerView} from "../../Views/EnemyLayerView.tsx";
 import {PlayerHUDView} from "../../Views/GameHUD/PlayerHUDView.tsx";
+import type {WorldModel} from "../../Models/World/WorldModel.ts";
 
 extend({TilingSprite});
-function PirateGamePixiStage({ world }) {
+
+interface Props{
+    world: WorldModel;
+}
+function PirateGamePixiStage({ world }: Props) {
     
     const [texture, setTexture] = useState(Texture.EMPTY)
     if (texture === Texture.EMPTY) {

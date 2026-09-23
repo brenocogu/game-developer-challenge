@@ -8,6 +8,8 @@ import {WorldModel} from "../../Models/World/WorldModel.ts";
 import {useEffect, useMemo, useState} from "react";
 import PirateGamePixiStage from "./PirateGamePixiStage.tsx";
 import PausePopUp from "../PausePopUp/PausePopUp.tsx";
+import {GameEndReason, type GameResultsData} from "../../Models/GameRules.ts";
+import ResultsPopUp from "../ResultsPopUp/ResultsPopUp.tsx";
 
 extend({
     Container,
@@ -19,8 +21,10 @@ interface Props{
 }
 function GameStage({ sceneChangeHandler } : Props) {
     const [paused, setPaused] = useState(false);
+    const [gameResults, setResults] = useState(null);
+    
     //TODO:: Change to UseRef
-    const worldModel = useMemo(() => new WorldModel(800,600, setPaused), []);
+    const worldModel = useMemo(() => new WorldModel(800,600, setPaused, handleGameFinished), []);
     
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
@@ -66,11 +70,25 @@ function GameStage({ sceneChangeHandler } : Props) {
     return (
         <>
             {(paused) && (<PausePopUp sceneChangeHandler={sceneChangeHandler} unpauseHandler={() => worldModel.revertPause()}/>)}
+            {(gameResults) && (<ResultsPopUp sceneChangeHandler={sceneChangeHandler} restartGameHandler={() => performReload()} results={gameResults}/>)}
             <Application>
                 <PirateGamePixiStage world={worldModel} />
             </Application>
         </>
     )
+    
+    function performReload(){
+        setResults(null);
+        worldModel.performReload();
+    }
+
+    function handleGameFinished(e: GameEndReason){
+        setResults({
+            gameEndReason: e,
+            totalPoints: worldModel.state.score,
+            timeSetting: "1:30"
+        });
+    }
 }
 
 
@@ -78,6 +96,7 @@ function resetInput(world: WorldModel) {
     world.input.turnDirection = 0;
     world.input.thrust = false;
 }
+
 
 
 export default GameStage

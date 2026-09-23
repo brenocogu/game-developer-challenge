@@ -8,8 +8,8 @@ function PirateBattleApp() {
   
   return (
     <>
-        {gameStage === "menu" && (<MainMenuStage sceneChangeHandler={(handler) => setGameStage(handler)} />)}
-        {gameStage === "game" && (<GameStage sceneChangeHandler={(handler) => setGameStage(handler)} />)}
+        {gameStage === "menu" && (<MainMenuStage sceneChangeHandler={(handler: string) => setGameStage(handler)} />)}
+        {gameStage === "game" && (<GameStage sceneChangeHandler={(handler: string) => setGameStage(handler)} />)}
     </>
   )
 }

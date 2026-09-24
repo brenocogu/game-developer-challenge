@@ -1,10 +1,6 @@
-import { Assets, Texture, Text} from 'pixi.js';
-import { useRef, useState } from 'react';
-import { useTick, extend } from '@pixi/react';
 import type {WorldModel} from "../../../Models/World/WorldModel.ts";
 import {PlayerInputHUDButton} from "./Generic/PlayerInputHUDButton.tsx";
 
-extend({Text})
 interface Props {
     world: WorldModel
 }

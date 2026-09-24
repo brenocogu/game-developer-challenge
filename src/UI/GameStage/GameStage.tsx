@@ -10,7 +10,6 @@ import PirateGamePixiStage from "./PirateGamePixiStage.tsx";
 import PausePopUp from "../PausePopUp/PausePopUp.tsx";
 import {GameEndReason, type GameResultsData} from "../../Models/GameRules.ts";
 import ResultsPopUp from "../ResultsPopUp/ResultsPopUp.tsx";
-import OptionsPopUp from "../OptionsPopUp/OptionsPopUp.tsx";
 
 extend({
     Container,

@@ -2,7 +2,7 @@ O jogo segue o padrão MVU (Model-View-Update), desacoplando a lógica com a ren
 
 A lógica do jogo vive dentro de `Models`
 - `World/WorldModel.ts` é o responsável pelo estado atual do jogo: inimigos, balas, niveis, posições, jogador, etc... Ele é atualizado pelos `Systems` e consumido pelo `React/PixiJS` para render e UI
-- `World/Systems/` contém todas as classes agnósticas responsáveis pelas ações do jogo durante a partida. Movimentação, colisão, inimigos, tiros, etc..: tudo vive nessa camada a parte do render e UI, completamente testável mesmo sem framework de 3D.
+- `World/Systems/` contém todas as classes agnósticas responsáveis pelas ações do jogo durante a partida. Movimentação, colisão, inimigos, tiros, etc..: tudo vive nessa camada a parte do render e UI, completamente testável mesmo sem framework de render.
 
 o `WorldModel` tem propriedades para:
 - `InputState` - objeto que explicita quais comandos estão ativos no frame naquele momento (mais detalhes em `Input`)
@@ -21,3 +21,10 @@ A renderização e carregamento dos assets vive dentro de `src/Views`, contém t
 Uma importante decisão de manter os sistemas desacoplados é que as responsabilidades dos mesmos estão ordenadas e centralizadas. Um Exemplo é todo o ciclo de vida da `Bullet`, onde a colisão ou out-of-bounds não mexe diretamente com o conteúdo da array, mas sim via `filter` sempre antes de qualquer outro cálculo, evitando alterações na coleção enquanto acontece uma operação
 
 Em cada pasta de UI que existe a substa 'Generic/', é possível encontrar componentes agnósticos da tela qe podem ser reutilizados no sistema.
+
+----
+## Controles
+- A/D - virar o barquinho
+- W - Avançar
+- Space - atirar
+- Q/E - atirar para esquerda/direita (respectivamente)

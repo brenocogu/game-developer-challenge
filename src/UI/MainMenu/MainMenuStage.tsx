@@ -1,5 +1,5 @@
-import heroImg from '../../assets/png/retina/ui/menu/title_pirate_battle.png'
-import boatImage from '../../assets/png/default/ships/ship_8.png'
+import heroImg from '/assets/png/retina/ui/menu/title_pirate_battle.png'
+import boatImage from '/assets/png/default/ships/ship_8.png'
 import GenericButton from "../GenericUI/GenericButton.tsx";
 interface Props{
     sceneChangeHandler: Function

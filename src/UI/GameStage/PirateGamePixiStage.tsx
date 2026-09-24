@@ -17,7 +17,7 @@ function PirateGamePixiStage({ world }: Props) {
     const [texture, setTexture] = useState(Texture.EMPTY)
     if (texture === Texture.EMPTY) {
         Assets
-            .load('src/assets/tilesheet/water.png')
+            .load('/assets/tilesheet/water.png')
             .then((result) => {
                 setTexture(result)
             });

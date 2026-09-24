@@ -20,7 +20,7 @@ export function PlayerPawnView({ world }: Props) {
     const [texture, setTexture] = useState(Texture.EMPTY)
     if (texture === Texture.EMPTY) {
         Assets
-            .load('src/assets/png/default/ships/ship_1.png')
+            .load('/assets/png/default/ships/ship_1.png')
             .then((result) => {
                 setTexture(result)
             });

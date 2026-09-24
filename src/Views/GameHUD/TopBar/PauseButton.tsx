@@ -14,13 +14,13 @@ export function PauseButton({ world }: Props) {
 
     const [frameTexture, setTexture] = useState(Texture.EMPTY);
     if (frameTexture === Texture.EMPTY) {
-        Assets.load('src/assets/png/retina/ui/hud/counter_panel.png')
+        Assets.load('/assets/png/retina/ui/hud/counter_panel.png')
             .then(setTexture);
     }
 
     const [iconPause, setIcon] = useState(Texture.EMPTY);
     if (iconPause === Texture.EMPTY) {
-        Assets.load('src/assets/png/retina/ui/controls/icon_pause.png')
+        Assets.load('/assets/png/retina/ui/controls/icon_pause.png')
             .then(setIcon);
     }
 

@@ -14,7 +14,7 @@ export function HealthBarView({ attachedShip, targetSize }: Props) {
 
     const [texture, setTexture] = useState(Texture.EMPTY);
     if (texture === Texture.EMPTY) {
-        Assets.load('src/assets/png/retina/ui/hud/health_frame.png')
+        Assets.load('/assets/png/retina/ui/hud/health_frame.png')
             .then(setTexture);
     }
 

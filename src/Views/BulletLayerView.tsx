@@ -14,7 +14,7 @@ export function BulletLayerView({ world }: Props) {
     const [texture, setTexture] = useState(Texture.EMPTY)
     if (texture === Texture.EMPTY) {
         Assets
-            .load('src/assets/png/retina/ship_parts/cannon_ball.png')
+            .load('/assets/png/retina/ship_parts/cannon_ball.png')
             .then((result) => {
                 setTexture(result)
             });

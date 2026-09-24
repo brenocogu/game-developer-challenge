@@ -14,13 +14,13 @@ export function PlayerTimeRemaining({ world }: Props) {
 
     const [frameTexture, setTexture] = useState(Texture.EMPTY);
     if (frameTexture === Texture.EMPTY) {
-        Assets.load('src/assets/png/retina/ui/hud/counter_panel.png')
+        Assets.load('/assets/png/retina/ui/hud/counter_panel.png')
             .then(setTexture);
     }
 
     const [iconTime, setIcon] = useState(Texture.EMPTY);
     if (iconTime === Texture.EMPTY) {
-        Assets.load('src/assets/png/retina/ui/hud/icon_time.png')
+        Assets.load('/assets/png/retina/ui/hud/icon_time.png')
             .then(setIcon);
     }
 

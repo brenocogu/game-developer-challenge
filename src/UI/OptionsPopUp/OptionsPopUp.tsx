@@ -1,11 +1,39 @@
 import GenericButton from "../GenericUI/GenericButton.tsx";
 import './options-popup.css';
+import {type GameSettings, loadSettings, saveSettings} from "../../Models/GameSettings.ts";
+import {useState} from "react";
+import OptionChangeDualButton from "./Generic/OptionChangeDualButton.tsx";
 
 interface Props{
     sceneChangeHandler: Function
 }
 function OptionsPopUp({ sceneChangeHandler }: Props) {
+    const [settings, setSettings] = useState<GameSettings>(loadSettings);
+    const [matchDuration, setMatchDuration] = useState(settings.matchDuration);
+    const [enemySpawn, setEnemySpawn] = useState(settings.enemySpawnRate);
 
+    function updateMatchTime(delta: number){
+        let duration = settings.matchDuration;
+        duration += delta * 5;
+        duration = (duration > 180) ? 180 : (duration < 60) ? 60 : duration;
+        settings.matchDuration = duration;
+        
+        setMatchDuration(duration);
+        setSettings(settings);
+        saveSettings(settings);
+    }
+
+    function updateEnemySpawnRate(delta: number){
+        let spawnRate = settings.enemySpawnRate;
+        spawnRate += delta;
+        spawnRate = (spawnRate < 0.2) ? 0.2 : spawnRate;
+        settings.enemySpawnRate = spawnRate;
+        
+        setEnemySpawn(spawnRate);
+        setSettings(settings);
+        saveSettings(settings);
+    }
+    
     return (
         <>
             <section id="center-popup">
@@ -15,14 +43,13 @@ function OptionsPopUp({ sceneChangeHandler }: Props) {
                 <div>
                     <p>Game Session Time</p>
                     <br />
-                    <GenericButton clickCallback={() => sceneChangeHandler("options")} buttonText={"Play"} />
-                    <p> 120</p>
-                    <GenericButton clickCallback={() => sceneChangeHandler("options")} buttonText={"Play"} />
+                    <OptionChangeDualButton onValueChange={updateMatchTime} label={"Match Time"} value={matchDuration} />
+                    <br />
+                    <OptionChangeDualButton onValueChange={updateEnemySpawnRate} label={"Enemy Spawn Rate"} value={enemySpawn} />
                     <br />
                     <br />
                     <br />
-                    <br />
-                    <GenericButton clickCallback={() => sceneChangeHandler("history")}buttonText={"Play"} />
+                    <GenericButton clickCallback={() => sceneChangeHandler("menu")} buttonText={"Main menu"} />
                 </div>
             </section>
 

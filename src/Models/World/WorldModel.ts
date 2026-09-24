@@ -11,8 +11,8 @@ import {
 import {updateDefeatedEnemies, updateEnemiesAttacking, updateEnemiesPursuing} from "../Systems/enemyBehaviourSystem.ts";
 import {spawnEnemyRandomOutside} from "../Systems/enemySpawnSystem.ts";
 import {GameEndReason} from "../GameRules.ts";
+import {type GameSettings, loadSettings} from "../GameSettings.ts";
 
-export const TIME_MAX: number = 180;
 export type OnGameFinished = (e: GameEndReason) => void;
 export class WorldModel {
     state: GameState;
@@ -29,18 +29,20 @@ export class WorldModel {
     screenHeight: number;
     onGameFinishedHandler: OnGameFinished;
     onPauseHandler: (paused: boolean) => void;
+    gameSettings: GameSettings;
+    
     constructor(
         screenWidth: number, 
         screenHeight: number,
         onPauseHandler: (paused: boolean) => void,
-        onGameFinishedHandler: OnGameFinished,){
+        onGameFinishedHandler: OnGameFinished) {
+        this.gameSettings = loadSettings();
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.onPauseHandler = onPauseHandler;
         this.state = this.createInitialState();
         this.onGameFinishedHandler = onGameFinishedHandler;
         this.stateReload = false;
-        
     }
     
     
@@ -102,11 +104,12 @@ export class WorldModel {
             bullets: [],
             enemies: [],
             enemySpawner: {
-                timeToSpawn: 5,
+                timeToSpawn: this.gameSettings.enemySpawnRate/2,
+                maxSpawnTime: this.gameSettings.enemySpawnRate,
                 nextUID: 0,
             },
             score: 0,
-            timeRemaining: TIME_MAX
+            timeRemaining: this.gameSettings.matchDuration
         }
     }
     

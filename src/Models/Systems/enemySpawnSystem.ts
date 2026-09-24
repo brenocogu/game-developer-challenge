@@ -1,11 +1,9 @@
 import {type Enemy, EnemyState, EnemyType, type GameState} from "../GameObjects.ts";
 import type {Vector2} from "../Vector2.ts";
 
-export const MAX_SPAWN_TIME: number = 10;
-
 export function spawnEnemyRandomOutside(state: GameState, deltaTime: number){
     
-    if(state.enemySpawner.timeToSpawn < MAX_SPAWN_TIME)
+    if(state.enemySpawner.timeToSpawn < state.enemySpawner.maxSpawnTime)
     {
         state.enemySpawner.timeToSpawn += deltaTime;
         return;
@@ -47,7 +45,6 @@ export function updateEnemiesDespawn(state: GameState) {
     {
         if (enemy.currentHp >= 0 )
             continue;
-        //TODO:: ADD SCORE
         //TODO: ADD FEEDBACK
 
         markedForDeletion.push(enemy)

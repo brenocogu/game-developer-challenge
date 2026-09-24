@@ -61,6 +61,7 @@ export interface Enemy extends DefaultShip {
 
 export interface EnemySpawner {
     timeToSpawn: number,
+    maxSpawnTime: number,
     nextUID: number,
 }
 

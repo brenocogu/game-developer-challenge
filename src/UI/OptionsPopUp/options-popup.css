@@ -13,3 +13,21 @@
     text-align: center;
     margin: auto;
 }
+
+.flex-display{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.delta-button {
+    width: 30px;
+    height: 30px;
+    background-image: url("/assets/png/default/ui/controls/button_round_normal.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: transparent;
+    margin: 0 10px 0 10px;
+}

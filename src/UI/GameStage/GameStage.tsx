@@ -64,7 +64,7 @@ function GameStage({ sceneChangeHandler } : Props) {
 
         const blur = () => {
             resetInput(worldModel);
-            // worldModel.performPause();
+            worldModel.performPause();
         };
         window.addEventListener('blur', blur);
 

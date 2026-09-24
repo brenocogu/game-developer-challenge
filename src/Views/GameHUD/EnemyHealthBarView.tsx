@@ -22,7 +22,7 @@ export function EnemyHealthBarView({ attachedShip, targetSize }: Props) {
         <pixiContainer 
             ref={spriteRef}
             zIndex={5}>
-            <HealthBarView  attachedShip={attachedShip} targetSize={targetSize} />
+            <HealthBarView  attachedShip={attachedShip} targetSize={targetSize} imageName={"enemy_health_fill_red.png"}/>
         </pixiContainer>
     );
 }

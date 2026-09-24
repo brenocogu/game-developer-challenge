@@ -3,6 +3,7 @@ import {HealthBarView} from "./HealthBarView.tsx";
 import {PlayerScoreView} from "./TopBar/PlayerScoreView.tsx";
 import {PlayerTimeRemaining} from "./TopBar/PlayerTimeRemainingView.tsx";
 import {PauseButton} from "./TopBar/PauseButton.tsx";
+import {PlayerInputHUD} from "./BottomBar/PlayerInputHUD.tsx";
 
 interface Props {
     world: WorldModel;
@@ -15,7 +16,7 @@ export function PlayerHUDView({ world }: Props) {
                 zIndex={10}
                 x={140}
                 y={32}>
-                <HealthBarView attachedShip={world.state.player} targetSize={{x: 180, y: 32}} />
+                <HealthBarView attachedShip={world.state.player} targetSize={{x: 180, y: 32}} imageName={"health_fill_green.png"} />
             </pixiContainer>
             
             <pixiContainer
@@ -23,6 +24,11 @@ export function PlayerHUDView({ world }: Props) {
                 <PlayerScoreView world={world} />
                 <PlayerTimeRemaining world={world} />
                 <PauseButton world={world} />
+            </pixiContainer>
+
+            <pixiContainer
+                zIndex={10}>
+                <PlayerInputHUD world={world} />
             </pixiContainer>
         </>
     );

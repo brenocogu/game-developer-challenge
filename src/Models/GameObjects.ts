@@ -68,6 +68,8 @@ export interface InputState{
     turnDirection: number;
     thrust: boolean;
     firing: boolean;
+    fireLeftBurst: boolean;
+    fireRightBurst: boolean;
 }
 
 export interface GameState {

@@ -36,6 +36,10 @@ function GameStage({ sceneChangeHandler } : Props) {
                 worldModel.input.thrust = true;
             if(e.code == "Space")
                 worldModel.input.firing = true;
+            if(e.code == "KeyE")
+                worldModel.input.fireLeftBurst = true;
+            if(e.code == "KeyQ")
+                worldModel.input.fireRightBurst = true;
             
             e.preventDefault();
         };
@@ -49,6 +53,10 @@ function GameStage({ sceneChangeHandler } : Props) {
                 worldModel.input.thrust = false;
             if(e.code == "Space")
                 worldModel.input.firing = false;
+            if(e.code == "KeyE")
+                worldModel.input.fireLeftBurst = false;
+            if(e.code == "KeyQ")
+                worldModel.input.fireRightBurst = false;
         };
 
         window.addEventListener('keydown', down);

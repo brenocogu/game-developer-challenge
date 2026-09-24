@@ -2,7 +2,12 @@ import type {GameState, InputState} from "../GameObjects.ts";
 import type {Vector2} from "../Vector2.ts";
 
 import {applyInput} from "../Systems/inputHandlerSystem.ts";
-import {playerInputShootNewBullet, updateBullets, updateReloadTime} from "../Systems/bulletSystem.ts";
+import {
+    playerInputShootBurstAttack,
+    playerInputShootNewBullet,
+    updateBullets,
+    updateReloadTime
+} from "../Systems/bulletSystem.ts";
 import {updateDefeatedEnemies, updateEnemiesAttacking, updateEnemiesPursuing} from "../Systems/enemyBehaviourSystem.ts";
 import {spawnEnemyRandomOutside} from "../Systems/enemySpawnSystem.ts";
 import {GameEndReason} from "../GameRules.ts";
@@ -11,7 +16,13 @@ export const TIME_MAX: number = 180;
 export type OnGameFinished = (e: GameEndReason) => void;
 export class WorldModel {
     state: GameState;
-    input: InputState = { turnDirection: 0, thrust: false, firing: false };
+    input: InputState = { 
+        turnDirection: 0, 
+        thrust: false, 
+        firing: false,
+        fireLeftBurst: false,
+        fireRightBurst: false,
+    };
     
     stateReload: boolean;
     screenWidth: number;
@@ -52,6 +63,7 @@ export class WorldModel {
         
         applyInput(this.state, this.input, deltaTime);
         playerInputShootNewBullet(this.state, this.input, this.state.player);
+        playerInputShootBurstAttack(this.state, this.input, this.state.player);
 
         updateDefeatedEnemies(this.state);
         spawnEnemyRandomOutside(this.state, deltaTime);
@@ -85,7 +97,7 @@ export class WorldModel {
                 rotation: 0,
                 collisionRadius: 10,
                 width: 33,
-                height: 57
+                height: 57,
             },
             bullets: [],
             enemies: [],
